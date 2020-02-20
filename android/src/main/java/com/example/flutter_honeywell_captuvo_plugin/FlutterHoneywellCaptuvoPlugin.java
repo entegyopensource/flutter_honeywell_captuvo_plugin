@@ -6,14 +6,22 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
+import io.flutter.plugin.common.EventChannel;
+import io.flutter.plugin.common.EventChannel.EventSink;
+import io.flutter.plugin.common.EventChannel.StreamHandler;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 /** FlutterHoneywellCaptuvoPlugin */
-public class FlutterHoneywellCaptuvoPlugin implements FlutterPlugin, MethodCallHandler {
+public class FlutterHoneywellCaptuvoPlugin implements FlutterPlugin, MethodCallHandler, StreamHandler {
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-    final MethodChannel channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "flutter_honeywell_captuvo_plugin_method_channel");
-    channel.setMethodCallHandler(new FlutterHoneywellCaptuvoPlugin());
+    final FlutterHoneywellCaptuvoPlugin plugin = new FlutterHoneywellCaptuvoPlugin();
+
+    final MethodChannel methodChannel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "flutter_honeywell_captuvo_plugin_method_channel");
+    methodChannel.setMethodCallHandler(plugin);
+    
+    final EventChannel eventChannel = new EventChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "flutter_honeywell_captuvo_plugin_event_channel");
+    eventChannel.setStreamHandler(plugin);
   }
 
   // This static function is optional and equivalent to onAttachedToEngine. It supports the old
@@ -26,17 +34,36 @@ public class FlutterHoneywellCaptuvoPlugin implements FlutterPlugin, MethodCallH
   // depending on the user's project. onAttachedToEngine or registerWith must both be defined
   // in the same class.
   public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "flutter_honeywell_captuvo_plugin_method_channel");
-    channel.setMethodCallHandler(new FlutterHoneywellCaptuvoPlugin());
+    final FlutterHoneywellCaptuvoPlugin plugin = new FlutterHoneywellCaptuvoPlugin();
+
+    final MethodChannel methodChannel = new MethodChannel(registrar.messenger(), "flutter_honeywell_captuvo_plugin_method_channel");
+    methodChannel.setMethodCallHandler(plugin);
+    
+    final EventChannel eventChannel = new EventChannel(registrar.messenger(), "flutter_honeywell_captuvo_plugin_event_channel");
+    eventChannel.setStreamHandler(plugin);
   }
 
   @Override
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-    if (call.method.equals("getPlatformVersion")) {
-      result.success("Android " + android.os.Build.VERSION.RELEASE);
+    if (call.method.equals("startDecoderHardware")) {
+      result.success("7"); // ProtocolConnectionStatus.notSupported
+    } else if (call.method.equals("stopDecoderHardware")) {
+      result.success(null);
+    } else if (call.method.equals("startDecoderScanning")) {
+      result.success(null);
+    } else if (call.method.equals("stopDecoderScanning")) {
+      result.success(null);
     } else {
       result.notImplemented();
     }
+  }
+
+  @Override
+  public void onListen(Object arguments, EventSink events) {
+  }
+
+  @Override
+  public void onCancel(Object arguments) {
   }
 
   @Override

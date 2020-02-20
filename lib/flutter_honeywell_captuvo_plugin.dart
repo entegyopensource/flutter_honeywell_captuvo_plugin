@@ -12,6 +12,7 @@ enum ProtocolConnectionStatus {
   protocolConnectionUnableToConnectNOAccessary, // Protocol connection fail, the Sled was not connected to apple device
   protocolConnectionUnableToConnectNOProtocal, // does not recognize the specified protocol or there was no corressponding Protocal defined in plist or there was an error communicating with the SLed.
 
+  notSupported,
   error,
 }
 
