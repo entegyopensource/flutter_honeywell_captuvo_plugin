@@ -12,7 +12,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 public class FlutterHoneywellCaptuvoPlugin implements FlutterPlugin, MethodCallHandler {
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-    final MethodChannel channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "flutter_honeywell_captuvo_plugin");
+    final MethodChannel channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "flutter_honeywell_captuvo_plugin_method_channel");
     channel.setMethodCallHandler(new FlutterHoneywellCaptuvoPlugin());
   }
 
@@ -26,7 +26,7 @@ public class FlutterHoneywellCaptuvoPlugin implements FlutterPlugin, MethodCallH
   // depending on the user's project. onAttachedToEngine or registerWith must both be defined
   // in the same class.
   public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "flutter_honeywell_captuvo_plugin");
+    final MethodChannel channel = new MethodChannel(registrar.messenger(), "flutter_honeywell_captuvo_plugin_method_channel");
     channel.setMethodCallHandler(new FlutterHoneywellCaptuvoPlugin());
   }
 
