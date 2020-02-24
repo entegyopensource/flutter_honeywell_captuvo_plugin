@@ -22,4 +22,4 @@ dev_dependencies:
 flutter:
   plugin:
     androidPackage: au.com.entegy.flutter_honeywell_captuvo_plugin
-    pluginClass: CaptuvoPlugin
+    pluginClass: FlutterHoneywellCaptuvoPlugin
