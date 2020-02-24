@@ -16,7 +16,7 @@ enum ProtocolConnectionStatus {
   error,
 }
 
-class FlutterHoneywellCaptuvoPlugin {
+class CaptuvoPlugin {
   static const MethodChannel _methodChannel = const MethodChannel('flutter_honeywell_captuvo_plugin_method_channel');
   static const EventChannel _eventChannel = const EventChannel('flutter_honeywell_captuvo_plugin_event_channel');
   static Stream<Map<String, dynamic>> _eventStrem;

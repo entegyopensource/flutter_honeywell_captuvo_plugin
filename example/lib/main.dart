@@ -17,10 +17,10 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    FlutterHoneywellCaptuvoPlugin.startDecoderHardware();
-    decoderConnectionStreamubscription = FlutterHoneywellCaptuvoPlugin.decoderConnectionStream.listen((isConnected) {
+    CaptuvoPlugin.startDecoderHardware();
+    decoderConnectionStreamubscription = CaptuvoPlugin.decoderConnectionStream.listen((isConnected) {
       if (isConnected) {
-        FlutterHoneywellCaptuvoPlugin.startDecoderHardware();
+        CaptuvoPlugin.startDecoderHardware();
       }
     });
   }
@@ -45,13 +45,13 @@ class _MyAppState extends State<MyApp> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 StreamBuilder<bool>(
-                  stream: FlutterHoneywellCaptuvoPlugin.decoderConnectionStream,
+                  stream: CaptuvoPlugin.decoderConnectionStream,
                   initialData: false,
                   builder: (_, snapshot) => Text('Decoder is ${snapshot.data ? "Conencted" : "Disconnected"}'),
                 ),
                 const SizedBox(height: 10.0),
                 StreamBuilder<String>(
-                  stream: FlutterHoneywellCaptuvoPlugin.decoderScanDataStream,
+                  stream: CaptuvoPlugin.decoderScanDataStream,
                   initialData: "NONE",
                   builder: (_, snapshot) => Text('Last scan data: ${snapshot.data}'),
                 ),
@@ -69,8 +69,8 @@ class _MyAppState extends State<MyApp> {
             ),
             child: Icon(Icons.scanner),
           ),
-          onTapDown: (_) => FlutterHoneywellCaptuvoPlugin.startDecoderScanning(),
-          onTapUp: (_) => FlutterHoneywellCaptuvoPlugin.stopDecoderScanning(),
+          onTapDown: (_) => CaptuvoPlugin.startDecoderScanning(),
+          onTapUp: (_) => CaptuvoPlugin.stopDecoderScanning(),
         ),
       ),
     );

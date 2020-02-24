@@ -1,4 +1,4 @@
-package com.example.flutter_honeywell_captuvo_plugin;
+package au.com.entegy.flutter_honeywell_captuvo_plugin;
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
