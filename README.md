@@ -4,7 +4,7 @@ Flutter wrapper for the Honeywell Captuvo SL22/42 iOS API.
 
 ## Usage
 ```dart
-import 'package:flutter_honeywell_captuvo_plugin/captuvo_plugin.dart';
+import 'package:flutter_honeywell_captuvo_plugin/flutter_honeywell_captuvo_plugin.dart';
 
 @override
 void initState() {
