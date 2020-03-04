@@ -1,6 +1,6 @@
 name: flutter_honeywell_captuvo_plugin
 description: Flutter wrapper for the Honeywell Captuvo SL22/42 barcode scanners iOS API.
-version: 0.1.0
+version: 0.1.1
 homepage: https://entegy.com.au
 
 environment:
