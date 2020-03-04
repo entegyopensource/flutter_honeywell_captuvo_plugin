@@ -9,13 +9,13 @@ import 'package:flutter_honeywell_captuvo_plugin/flutter_honeywell_captuvo_plugi
 @override
 void initState() {
   super.initState();
-  CaptuvoPlugin.startDecoderHardware();
+  FlutterHoneywellCaptuvoPlugin.startDecoderHardware();
 }
 
 @override
 Widget build(BuildContext context) {
   return StreamBuilder<String>(
-    stream: CaptuvoPlugin.decoderScanDataStream,
+    stream: FlutterHoneywellCaptuvoPlugin.decoderScanDataStream,
     builder: (_, snapshot) => Text('Last scan data: ${snapshot.data}'),
   );
 }
