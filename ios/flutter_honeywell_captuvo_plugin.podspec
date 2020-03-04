@@ -15,6 +15,7 @@ A new flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
+  s.vendored_libraries = 'Classes/libCaptuvoSDK.a'
   s.dependency 'Flutter'
   s.platform = :ios, '8.0'
 

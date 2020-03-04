@@ -1,14 +1,25 @@
-# flutter_honeywell_captuvo_plugin
+# Flutter Honeywell Captuvo Plugin
 
-A new flutter plugin project.
+Flutter wrapper for the Honeywell Captuvo SL22/42 iOS API.
 
-## Getting Started
+## Usage
+```dart
+import 'package:flutter_honeywell_captuvo_plugin/flutter_honeywell_captuvo_plugin.dart';
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+@override
+void initState() {
+  super.initState();
+  CaptuvoPlugin.startDecoderHardware();
+}
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+@override
+Widget build(BuildContext context) {
+  return StreamBuilder<String>(
+    stream: CaptuvoPlugin.decoderScanDataStream,
+    builder: (_, snapshot) => Text('Last scan data: ${snapshot.data}'),
+  );
+}
+```
+
+See the provided example app for more.
+

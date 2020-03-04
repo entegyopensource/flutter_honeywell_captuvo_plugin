@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
+
 import 'package:flutter_honeywell_captuvo_plugin/flutter_honeywell_captuvo_plugin.dart';
 
 void main() => runApp(MyApp());
@@ -12,32 +12,23 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  StreamSubscription decoderConnectionStreamubscription;
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    FlutterHoneywellCaptuvoPlugin.startDecoderHardware();
+    decoderConnectionStreamubscription = FlutterHoneywellCaptuvoPlugin.decoderConnectionStream.listen((isConnected) {
+      if (isConnected) {
+        FlutterHoneywellCaptuvoPlugin.startDecoderHardware();
+      }
+    });
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      platformVersion = await FlutterHoneywellCaptuvoPlugin.platformVersion;
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
+  @override
+  void dispose() {
+    decoderConnectionStreamubscription?.cancel();
+    super.dispose();
   }
 
   @override
@@ -45,10 +36,41 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Captuvo SL42 API Example'),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                StreamBuilder<bool>(
+                  stream: FlutterHoneywellCaptuvoPlugin.decoderConnectionStream,
+                  initialData: false,
+                  builder: (_, snapshot) => Text('Decoder is ${snapshot.data ? "Conencted" : "Disconnected"}'),
+                ),
+                const SizedBox(height: 10.0),
+                StreamBuilder<String>(
+                  stream: FlutterHoneywellCaptuvoPlugin.decoderScanDataStream,
+                  initialData: "NONE",
+                  builder: (_, snapshot) => Text('Last scan data: ${snapshot.data}'),
+                ),
+              ],
+            ),
+          ),
+        ),
+        floatingActionButton: GestureDetector(
+          child: Container(
+            height: 100.0,
+            width: 100.0,
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.circular(50.0),
+            ),
+            child: Icon(Icons.scanner),
+          ),
+          onTapDown: (_) => FlutterHoneywellCaptuvoPlugin.startDecoderScanning(),
+          onTapUp: (_) => FlutterHoneywellCaptuvoPlugin.stopDecoderScanning(),
         ),
       ),
     );
