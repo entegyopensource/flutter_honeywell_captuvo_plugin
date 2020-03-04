@@ -9,3 +9,7 @@
 ## 0.1.0
 
 * Cutting the ribbon
+
+## 0.1.0
+
+* Fix README
